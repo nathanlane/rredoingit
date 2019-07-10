@@ -3,8 +3,8 @@
 
 # 1. SAVE CURRENT PACKAGES.
 # Run on old computer, save packages to Dropbox.
-tmp = installed.packages() 
-old_installedpackages = as.vector(tmp[is.na(tmp[,"Priority"]), 1]) 
+temp_packagelist = installed.packages() 
+old_installedpackages = as.vector(temp_packagelist[is.na(temp_packagelist[,"Priority"]), 1]) 
 file_path <- file.path("~" , "Dropbox" , "CodeProgrammingSync" , "R" , "installed_packages.rda" )
 save( old_installedpackages , file = file_path )
 
@@ -16,12 +16,11 @@ save( old_installedpackages , file = file_path )
 
 # Reload package list.
 load(file_path)
-oldinstallpackages <- installedpackages #Rename dataframe.
 
 # Looped installer. Yes, not functional R-style.
-for (count in 1:length(installedpackages)) { 
+for (count in 1:length(old_installpackages)) { 
   
-  install.packages( installedpackages[count] , 
+  install.packages( old_installpackages[count] , 
                     dependencies = TRUE ,
                     force = FALSE ,
                     repos = "https://cloud.r-project.org" ) 
@@ -29,8 +28,7 @@ for (count in 1:length(installedpackages)) {
 }
 
 #... the last argument (repos) is optional. Specific to my R.
-
-
+#... there are and always compilation errors.
 
 
 # Doodle: if a system has a long, incomplete list of packages,
